@@ -55,7 +55,12 @@ public class AdminService implements UserDetailsService {
       if (admin.size() > 1)
         throw new Exception("There is more than one admin");
 
-      return admin.get(0);
+      if (admin.size() == 1) {
+
+        return admin.get(0);
+      } else {
+        return null;
+      }
 
     } catch (Exception e) {
       System.err.println("Error --" + e.getMessage());
@@ -80,7 +85,6 @@ public class AdminService implements UserDetailsService {
       return null;
     }
   }
-
 
   @Transactional
   @Override

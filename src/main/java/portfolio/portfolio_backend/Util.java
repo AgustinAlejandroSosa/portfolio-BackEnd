@@ -1,4 +1,4 @@
-/*package portfolio.portfolio_backend;
+package portfolio.portfolio_backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,21 +10,22 @@ import portfolio.portfolio_backend.service.AdminService;
 
 @Component
 public class Util implements CommandLineRunner {
-
   @Autowired
   AdminService adminService;
-
   @Autowired
   PasswordEncoder passwordEncoder;
 
   @Override
   public void run(String... args) throws Exception {
 
-    String passwordEncode = passwordEncoder.encode("okaysoftware");
+    if (adminService.getAdmin() == null) {
 
-    Admin admin = new Admin("admin", passwordEncode);
+      String encoded = passwordEncoder.encode("okaysoftware");
 
-    adminService.saveAdmin(admin);
+      Admin admin = new Admin("admin", encoded);
+
+      adminService.saveAdmin(admin);
+    }
   }
 
-}*/
+}

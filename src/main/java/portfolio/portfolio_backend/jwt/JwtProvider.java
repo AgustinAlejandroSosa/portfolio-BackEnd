@@ -16,7 +16,6 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import portfolio.portfolio_backend.entity.Admin;
 
 @Component
 public class JwtProvider {
@@ -30,8 +29,8 @@ public class JwtProvider {
   private int expiration;
 
   public String generateToken(Authentication authentication) {
-    User user= (User) authentication.getPrincipal();
-    System.out.print(secret);
+    User user = (User) authentication.getPrincipal();
+
     return Jwts.builder().setSubject(user.getUsername())
         .setIssuedAt(new Date())
         .setExpiration(new Date(new Date().getTime() + expiration * 1000))
@@ -40,7 +39,7 @@ public class JwtProvider {
   }
 
   public String getUsernameFromToken(String token) {
-    return Jwts.parserBuilder().setSigningKey(getSecret(token)).build().parseClaimsJws(token).getBody().getSubject();
+    return Jwts.parserBuilder().setSigningKey(getSecret(secret)).build().parseClaimsJws(token).getBody().getSubject();
   }
 
   public Key getSecret(String secret) {

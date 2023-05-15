@@ -9,15 +9,18 @@ import lombok.Data;
 @Data
 public class JwtDto {
 
-  public JwtDto(String username, String jwt, Collection<? extends GrantedAuthority> authorities2) {
-  }
-
+  
   private String username;
-
+  
   private String token;
-
+  
   private String bearer = "Bearer";
-
+  
   private Collection<? extends GrantedAuthority> authorities;
   
+  public JwtDto(String username, String jwt, Collection<? extends GrantedAuthority> authorities) {
+    this.username = username;
+    this.token= jwt;
+    this.authorities=authorities;
+  }
 }

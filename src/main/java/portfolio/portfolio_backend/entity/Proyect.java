@@ -10,50 +10,43 @@ import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
 @Entity
+@Data
 @AllArgsConstructor
-public class Skill {
+public class Proyect {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  private String name;
-
-  private boolean hard;
+  private String title;
+  private String description;
+  private String date;
+  private String repositoryLink;
 
   @OneToOne(targetEntity = Image.class, cascade = CascadeType.ALL)
   private Image image;
 
-  public Skill() {
+  public Proyect() {
   }
 
-  public Skill(String name, boolean hard, Image image) {
-    this.name = name;
-    this.hard = hard;
-    this.image = image;
-  }
-
-  public Skill(String name, boolean hard) {
-    this.name = name;
-    this.hard = hard;
+  public Proyect(String title, String description, String date, String repositoryLink) {
+    this.title = title;
+    this.description = description;
+    this.date = date;
+    this.repositoryLink = repositoryLink;
   }
 
   public void addImage(Image image) {
     if (this.image != image) {
-      image.removeSkill();
       this.image = image;
-      image.addSkill(this);
+      image.addProyect(this);
     }
   }
 
   public void removeImage() {
     if (this.image != null) {
       this.image = null;
-      if (this.image.getSkill() != null) {
-        this.image.removeSkill();
-      }
     }
   }
 }

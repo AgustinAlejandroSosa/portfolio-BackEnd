@@ -29,7 +29,7 @@ public class BeansConfig {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry
 						.addMapping("/**")
-						.allowedOrigins("http://localhost:4200")
+						.allowedOrigins("*")
 						.allowedMethods("PUT", "POST", "DELETE", "GET", "OPTIONS")
 						.allowedHeaders("*")
 						.allowCredentials(true);
