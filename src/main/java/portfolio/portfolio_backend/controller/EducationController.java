@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import portfolio.portfolio_backend.dto.ExperienceDto;
-import portfolio.portfolio_backend.dto.ProfileDto;
 import portfolio.portfolio_backend.entity.Education;
 import portfolio.portfolio_backend.entity.Image;
 import portfolio.portfolio_backend.service.EducationService;
