@@ -1,6 +1,6 @@
-FROM openjdk:21-ea-17-jdk
+FROM openjdk:20-ea-17-oracle
 
-MAINTAINER tunombre_o_alias
+MAINTAINER AgustinAlejandroSosa
 
 COPY target/portfolio_backend.jar portfolio_backend.jar
 
