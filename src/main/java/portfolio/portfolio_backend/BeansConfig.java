@@ -1,5 +1,9 @@
 package portfolio.portfolio_backend;
 
+
+import javax.sql.DataSource;
+
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,4 +39,14 @@ public class BeansConfig {
 			}
 		};
 	}
+
+	@Bean
+    public DataSource getDataSource() {
+        return DataSourceBuilder.create()
+          .driverClassName("com.mysql.cj.jdbc.Driver")
+          .url("jdbc:mysql://ukavqsss3lkaabun:qn5N67iC6mhfVGwVmI8w@buvypfoqpraqdguopfsw-mysql.services.clever-cloud.com:3306/buvypfoqpraqdguopfsw")
+          .username("ukavqsss3lkaabun")
+          .password("qn5N67iC6mhfVGwVmI8w")
+          .build();	
+    }
 }
