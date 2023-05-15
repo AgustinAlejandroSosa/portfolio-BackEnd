@@ -31,8 +31,7 @@ public class BeansConfig {
 						.addMapping("/**")
 						.allowedOrigins("*")
 						.allowedMethods("PUT", "POST", "DELETE", "GET", "OPTIONS")
-						.allowedHeaders("*")
-						.allowCredentials(true);
+						.allowedHeaders("*");
 			}
 		};
 	}
