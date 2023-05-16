@@ -25,17 +25,17 @@ public class ImageService {
   @Autowired
   private ImageRepository imageRepository;
 
-  private final StorageService storageService;
+  @Autowired
+  private StorageService storageService;
 
-  private final HttpServletRequest request;
 
-  public Image getImage(MultipartFile file) {
-    String url = getUrl(file);
+  public Image getImage(MultipartFile file, HttpServletRequest request) {
+    String url = getUrl(file, request);
 
     return findByUrl(url);
   }
 
-  public String getUrl(MultipartFile image) {
+  public String getUrl(MultipartFile image, HttpServletRequest request) {
 
     String path = storageService.store(image);
     String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");

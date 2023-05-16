@@ -10,7 +10,6 @@ import java.nio.file.StandardCopyOption;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileSystemStorageService implements StorageService {
 
-  @Value("${media.location}")
-  private String mediaLocation;
+  private String mediaLocation = "mediafiles";
 
   private Path rootLocation;
 

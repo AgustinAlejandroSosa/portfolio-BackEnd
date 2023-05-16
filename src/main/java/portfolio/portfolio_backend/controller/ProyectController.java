@@ -3,6 +3,8 @@ package portfolio.portfolio_backend.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.AllArgsConstructor;
 import portfolio.portfolio_backend.dto.ProyectDto;
 import portfolio.portfolio_backend.entity.Proyect;
 import portfolio.portfolio_backend.entity.Image;
@@ -45,7 +48,8 @@ public class ProyectController {
       @RequestParam("description") String description,
       @RequestParam("repositoryLink") String repositoryLink,
       @RequestParam("date") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDate date,
-      @RequestParam(name = "imageFile", required = false) MultipartFile file) {
+      @RequestParam(name = "imageFile", required = false) MultipartFile file,
+      HttpServletRequest request) {
     try {
       String formattedDateTo = date.toString().replace("-", "/");
 
@@ -57,11 +61,11 @@ public class ProyectController {
 
       if (file != null) {
 
-        Image image = imageService.getImage(file);
+        Image image = imageService.getImage(file, request);
         if (image != null) {
           newProyect.addImage(image);
         } else {
-          image = new Image(imageService.getUrl(file));
+          image = new Image(imageService.getUrl(file, request));
           newProyect.addImage(image);
         }
       }
@@ -108,7 +112,8 @@ public class ProyectController {
       @RequestParam("description") String description,
       @RequestParam("repositoryLink") String repositoryLink,
       @RequestParam("date") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDate date,
-      @RequestParam(name = "imageFile", required = false) MultipartFile file) {
+      @RequestParam(name = "imageFile", required = false) MultipartFile file,
+      HttpServletRequest request) {
 
     try {
 
@@ -122,11 +127,11 @@ public class ProyectController {
 
       if (file != null) {
 
-        Image image = imageService.getImage(file);
+        Image image = imageService.getImage(file, request);
         if (image != null) {
           newProyect.addImage(image);
         } else {
-          image = new Image(imageService.getUrl(file));
+          image = new Image(imageService.getUrl(file, request));
           newProyect.addImage(image);
         }
 

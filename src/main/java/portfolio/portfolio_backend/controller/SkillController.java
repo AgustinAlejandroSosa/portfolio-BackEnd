@@ -2,6 +2,8 @@ package portfolio.portfolio_backend.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import portfolio.portfolio_backend.dto.SkillDto;
 import portfolio.portfolio_backend.entity.Image;
 import portfolio.portfolio_backend.entity.Skill;
@@ -34,17 +37,18 @@ public class SkillController {
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("")
   public ResponseEntity<Skill> create(@RequestParam("name") String name, @RequestParam("hard") boolean hard,
-      @RequestParam(name = "logoFile", required = false) MultipartFile file) {
+      @RequestParam(name = "logoFile", required = false) MultipartFile file,
+      HttpServletRequest request) {
 
     try {
       Skill newSkill = new Skill(name, hard);
 
       if (file != null) {
-        Image image = imageService.getImage(file);
-        
+        Image image = imageService.getImage(file, request);
+
         if (image == null) {
-          image = new Image(imageService.getUrl(file));
-        }else{
+          image = new Image(imageService.getUrl(file, request));
+        } else {
           if (image.getSkill() != null) {
             return new ResponseEntity<Skill>(newSkill, HttpStatus.CONFLICT);
           }
@@ -114,7 +118,8 @@ public class SkillController {
   @PutMapping("/edit/{id}")
   public ResponseEntity<Skill> updateSkill(@PathVariable("id") Long id,
       @RequestParam(name = "logoFile", required = false) MultipartFile file, @RequestParam("name") String name,
-      @RequestParam("hard") boolean hard) {
+      @RequestParam("hard") boolean hard,
+      HttpServletRequest request) {
     try {
 
       Skill newSkill = new Skill();
@@ -122,7 +127,7 @@ public class SkillController {
       newSkill.setHard(hard);
 
       if (file != null) {
-        Image image = imageService.getImage(file);
+        Image image = imageService.getImage(file, request);
 
         if (image != null) {
           if (image.getSkill() != null) {
@@ -130,7 +135,7 @@ public class SkillController {
           }
           newSkill.addImage(image);
         } else {
-          image = new Image(imageService.getUrl(file));
+          image = new Image(imageService.getUrl(file, request));
           newSkill.addImage(image);
         }
 

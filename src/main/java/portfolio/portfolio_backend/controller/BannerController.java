@@ -1,5 +1,7 @@
 package portfolio.portfolio_backend.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import portfolio.portfolio_backend.entity.Banner;
 import portfolio.portfolio_backend.entity.Image;
 import portfolio.portfolio_backend.service.BannerService;
@@ -29,12 +32,13 @@ public class BannerController {
   @Autowired
   private ImageService imageService;
 
+
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("")
-  public ResponseEntity<Banner> create(@RequestParam("imageFile") MultipartFile file) {
+  public ResponseEntity<Banner> create(@RequestParam("imageFile") MultipartFile file,HttpServletRequest request) {
     try {
 
-      String url = imageService.getUrl(file);
+      String url = imageService.getUrl(file, request);
 
       Image image = imageService.findByUrl(url);
 

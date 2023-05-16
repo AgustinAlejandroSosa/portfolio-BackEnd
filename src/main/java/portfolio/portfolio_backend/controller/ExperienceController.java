@@ -3,6 +3,8 @@ package portfolio.portfolio_backend.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -45,7 +47,8 @@ public class ExperienceController {
       @RequestParam("description") String description,
       @RequestParam("dateSince") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDate dateSince,
       @RequestParam("dateTo") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDate dateTo,
-      @RequestParam(name = "imageFile", required = false) MultipartFile file) {
+      @RequestParam(name = "imageFile", required = false) MultipartFile file,
+      HttpServletRequest request) {
     try {
       String formattedDateSince = dateSince.toString().replace("-", "/");
       String formattedDateTo = dateTo.toString().replace("-", "/");
@@ -58,11 +61,11 @@ public class ExperienceController {
 
       if (file != null) {
 
-        Image image = imageService.getImage(file);
+        Image image = imageService.getImage(file,request);
         if (image != null) {
           newExperience.addImage(image);
         } else {
-          image = new Image(imageService.getUrl(file));
+          image = new Image(imageService.getUrl(file,request));
           newExperience.addImage(image);
         }
       }
@@ -109,7 +112,8 @@ public class ExperienceController {
       @RequestParam("description") String description,
       @RequestParam("dateSince") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDate dateSince,
       @RequestParam("dateTo") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDate dateTo,
-      @RequestParam(name = "imageFile", required = false) MultipartFile file) {
+      @RequestParam(name = "imageFile", required = false) MultipartFile file,
+      HttpServletRequest request) {
 
     try {
 
@@ -124,11 +128,11 @@ public class ExperienceController {
 
       if (file != null) {
 
-        Image image = imageService.getImage(file);
+        Image image = imageService.getImage(file,request);
         if (image != null) {
           newExperience.addImage(image);
         } else {
-          image = new Image(imageService.getUrl(file));
+          image = new Image(imageService.getUrl(file,request));
           newExperience.addImage(image);
         }
 

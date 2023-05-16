@@ -3,6 +3,8 @@ package portfolio.portfolio_backend.controller;
 import java.nio.file.Files;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -35,10 +37,9 @@ public class ImageController {
   private ImageService imageService;
 
   @PostMapping("")
-  public Map<String, String> upload(@RequestParam("imageFile") MultipartFile image) {
+  public Map<String, String> upload(@RequestParam("imageFile") MultipartFile image, HttpServletRequest request) {
     try {
-      String url = imageService.getUrl(image);
-      
+      String url = imageService.getUrl(image, request);
 
       return Map.of("url", url);
 

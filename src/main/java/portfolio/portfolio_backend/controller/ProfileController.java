@@ -2,6 +2,8 @@ package portfolio.portfolio_backend.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,10 +62,10 @@ public class ProfileController {
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping("/savePhoto")
-  public Map<String, String> savePhoto(@RequestParam("imageFile") MultipartFile file) {
+  public Map<String, String> savePhoto(@RequestParam("imageFile") MultipartFile file,HttpServletRequest request) {
     try {
 
-      String url = imageService.getUrl(file);
+      String url = imageService.getUrl(file,request);
 
       Image image = imageService.findByUrl(url);
 

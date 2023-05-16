@@ -3,6 +3,8 @@ package portfolio.portfolio_backend.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -41,7 +43,8 @@ public class EducationController {
       @RequestParam("description") String description,
       @RequestParam("dateSince") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDate dateSince,
       @RequestParam("dateTo") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDate dateTo,
-      @RequestParam(name = "imageFile", required = false) MultipartFile file) {
+      @RequestParam(name = "imageFile", required = false) MultipartFile file,
+      HttpServletRequest request) {
     try {
       String formattedDateSince = dateSince.toString().replace("-", "/");
       String formattedDateTo = dateTo.toString().replace("-", "/");
@@ -54,11 +57,11 @@ public class EducationController {
 
       if (file != null) {
 
-        Image image = imageService.getImage(file);
+        Image image = imageService.getImage(file, request);
         if (image != null) {
           newEducation.addImage(image);
         } else {
-          image = new Image(imageService.getUrl(file));
+          image = new Image(imageService.getUrl(file, request));
           newEducation.addImage(image);
         }
       }
@@ -101,7 +104,8 @@ public class EducationController {
       @RequestParam("description") String description,
       @RequestParam("dateSince") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDate dateSince,
       @RequestParam("dateTo") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDate dateTo,
-      @RequestParam(name = "imageFile", required = false) MultipartFile file) {
+      @RequestParam(name = "imageFile", required = false) MultipartFile file,
+      HttpServletRequest request) {
 
     try {
 
@@ -116,11 +120,11 @@ public class EducationController {
 
       if (file != null) {
 
-        Image image = imageService.getImage(file);
+        Image image = imageService.getImage(file, request);
         if (image != null) {
           newEducation.addImage(image);
         } else {
-          image = new Image(imageService.getUrl(file));
+          image = new Image(imageService.getUrl(file, request));
           newEducation.addImage(image);
         }
       } else {

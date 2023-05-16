@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
@@ -22,11 +21,10 @@ public class JwtProvider {
 
   private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
-  @Value("${jwt.secret}")
-  private String secret;
+  
+  private String secret = "iceAgeComingIceAgeComingThrowItOnTheFireThrowItOnTheFire";
 
-  @Value("${jwt.expiration}")
-  private int expiration;
+  private int expiration = 36000;
 
   public String generateToken(Authentication authentication) {
     User user = (User) authentication.getPrincipal();
